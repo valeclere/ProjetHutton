@@ -261,8 +261,11 @@ shinyUI(bootstrapPage(
                                      tags$div(id="metsel",
                                               radioButtons("methodsmain",
                                                            label = h3("Method selection"),
-                                                           choices = list("Method LWC" = 2, "Electre" = 3),
-                                                           selected = 2)
+                                                           choices = list("Method LWC" = 2, "Electre" = 3, "Method LWC-G" = 4),
+                                                           selected = 2),
+                                              tags$div(id="criterGroup",
+                                                       uiOutput('nbGroup'),
+                                                       uiOutput('GroupChoice'))
                                      ),
                                      tags$br(),
                                      actionButton("goButtonAdvanced", "Go"),
