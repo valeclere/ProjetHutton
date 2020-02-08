@@ -1824,23 +1824,18 @@ shinyServer(function(input, output,session) {
     content = function(file) {writeRaster(temporaryrast, format="GTiff", file)}
   )
   
-  output$nbGroup <- renderUI(
-    numericInput("nbGroup","Choose the number of group",2,2,length(input$mychooserp)-1,1))
+  output$nbGroup <- renderUI({
+    validate(need(input$methodsmain==4,""))
+    numericInput("nbGroup","Choose the number of group",2,2,length(input$mychooserp)-1,1)})
   
-  output$GroupChoice <- renderUI(
-   # Groups <- list()
-    #for(i in 1:input$nbGroup){
-     # Groups <- list(Groups,i)
-    #}
+  output$GroupChoice <- renderUI({
+    validate(need(input$methodsmain==4,""))
     lapply(input$mychooserp, function(i){
       tmp <- HPN[HPN$Description %in% substr(i,7,700),]$Nickname
       tmpdes <- HPN2[HPN$Description %in% substr(i,7,700)]
       descript <- gsub("_", " ", tmpdes)
       selectInput("Group choice",label=descript,choices=mapply(toString, 1:input$nbGroup),1)
-    }))
-  
-
-  
+    })})
   
   
   
