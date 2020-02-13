@@ -1,0 +1,5 @@
+Number	Name	Temp	Final
+1 LWC1 pathinputLWC1_temp pathinputLWC1_final
+2 LWC2 pathinputLWC2_temp pathinputLWC2_final
+3 Electre pathinputElectre_temp pathinputElectre_final
+4 LWC-G pathinputLWC-G_temp pathinputLWC-G_final

@@ -1522,6 +1522,17 @@ shinyServer(function(input, output,session) {
   })
   
   
+  observeEvent(input$goButtonAdvanced,{
+    groups<-c()
+    tmp <- paste0("GroupChoice",1)
+    print(tmp)
+    var <- get(input$tmp)
+    print(var)
+    groups <- c(groups,var)
+    print(groups)
+  })
+  
+  
   
   # Define input data as the values of each criteria weight (sliders)
   # Updated when goButtonAdvanced is pressed
@@ -1569,6 +1580,8 @@ shinyServer(function(input, output,session) {
         write(y, file = toString(Path["LWC2",2]),ncolumns = length(HP[,1])+length(HN[,1]),append=TRUE)}
       else if(input$methodsmain==3){     
         write(y, file = toString(Path["Electre",2]),ncolumns = length(HP[,1])+length(HN[,1]),append=TRUE)}
+      else if(input$methodsmain==4){     
+        write(y, file = toString(Path["LWC-G",2]),ncolumns = length(HP[,1])+length(HN[,1]),append=TRUE)}
     })
   })
   
@@ -1598,7 +1611,11 @@ shinyServer(function(input, output,session) {
     else if(input$methodsmain==3){     
       write(y, file = toString(Path["Electre",1]),ncolumns = length(HP[,1])+length(HN[,1]),append=TRUE)
       whereIsSaved <<-  toString(Path["Electre",1])
-      }
+    }
+    else if(input$methodsmain==4){     
+      write(y, file = toString(Path["LWC-G",1]),ncolumns = length(HP[,1])+length(HN[,1]),append=TRUE)
+      whereIsSaved <<-  toString(Path["LWC-G",1])
+    }
     })
   })
   
@@ -1642,7 +1659,7 @@ shinyServer(function(input, output,session) {
       
       if(radiomInput()==2){rst.comb.w=lwc2(rst.pnl, weightsVector())}
       if(radiomInput()==3){rst.comb.w=electre(rst.pnl, weightsVector())}
-      if(radiomInput()==4){rst.comb.w=lwcg(rst.pnl, weightsVector())}
+      #if(radiomInput()==4){rst.comb.w=lwcg(rst.pnl, weightsVector(),input$GroupChoice)}
       
       # Normalization of the unique raster
       rst.comb.w2=normalizer(rst.comb.w)
@@ -1834,7 +1851,7 @@ shinyServer(function(input, output,session) {
       tmp <- HPN[HPN$Description %in% substr(i,7,700),]$Nickname
       tmpdes <- HPN2[HPN$Description %in% substr(i,7,700)]
       descript <- gsub("_", " ", tmpdes)
-      selectInput("Group choice",label=descript,choices=mapply(toString, 1:input$nbGroup),1)
+      selectInput(inputId=paste0("GroupChoice",1),label=descript,choices=mapply(toString, 1:input$nbGroup),1)
     })})
   
   
@@ -3416,6 +3433,9 @@ observeEvent(input$goButtonThr, {
     vec <- weightAverage(readWeightssaved("Electre"))
     weightArray(vec)
   })
+  
+  
+  
 
   
   
